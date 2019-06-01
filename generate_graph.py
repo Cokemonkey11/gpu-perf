@@ -3,17 +3,11 @@ Fuck python.
 """
 
 from collections import OrderedDict
+import importlib
 
-import seaborn as sns
+import matplotlib
 import matplotlib.pyplot as plt
-sns.set(style="whitegrid")
-sns.set_color_codes("pastel")
-
-DPI = 120
-FIG, AXIS = plt.subplots(
-    figsize=(1024. / DPI, 1024. / DPI),
-    dpi=DPI,
-)
+import seaborn as sns
 
 METRICS = OrderedDict(
     sorted({
@@ -29,16 +23,47 @@ METRICS = OrderedDict(
     }.items(), key=lambda x: x[1])
 )
 
-PLOT = sns.barplot(
-    y=list(map(lambda x: x / METRICS["GT 520M"], METRICS.values())),
-    x=list(METRICS.keys()),
-    label=list(METRICS.keys()),
-    color="b"
+def render_graph(y, x, l, outname):
+    """Render and generate a graph, resetting the imports (side effects)."""
+    importlib.reload(matplotlib)
+    importlib.reload(plt)
+    importlib.reload(sns)
+
+    sns.set(style="whitegrid")
+    sns.set_color_codes("pastel")
+
+    dpi = 120
+    FIG, AXIS = plt.subplots(
+        figsize=(1024. / dpi, 1024. / dpi),
+        dpi=dpi,
+    )
+
+    plot = sns.barplot(
+        y=y,
+        x=x,
+        label=l,
+        color="b"
+    )
+
+    plot.set_xticklabels(plot.get_xticklabels(), rotation=45, ha="right")
+
+    AXIS.set(xlim=(-1, 10), ylabel="", xlabel="Relative performance of mobile GPUs")
+    sns.despine(left=True, bottom=True)
+
+    plt.savefig(outname, bbox_inches="tight")
+
+# With 520M for reference.
+render_graph(
+    list(map(lambda x: x / METRICS["GT 520M"], METRICS.values())),
+    list(METRICS.keys()),
+    list(METRICS.keys()),
+    "graph.png"
 )
 
-PLOT.set_xticklabels(PLOT.get_xticklabels(), rotation=45, ha="right")
-
-AXIS.set(xlim=(0, 10), ylabel="", xlabel="Relative performance of mobile GPUs")
-sns.despine(left=True, bottom=True)
-
-plt.savefig("graph.png", bbox_inches="tight")
+# Without the 520M for reference.
+render_graph(
+    list(METRICS.values())[1:],
+    list(METRICS.keys())[1:],
+    list(METRICS.keys())[1:],
+    "graph_no520m.png"
+)
