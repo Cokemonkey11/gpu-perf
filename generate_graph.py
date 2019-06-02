@@ -17,17 +17,18 @@ import seaborn as sns
 # -   has maxq variant
 METRICS = OrderedDict(
     sorted({
-        "GT 520M":      (2.26 / 29.3, True,  False),
-        "GTX 1050":     (1.,          True,  False),
-        "GTX 1050-Ti":  (1.23,        True,  True),
-        "GTX 1070":     (2.89,        True,  True),
-        "GTX 1080":     (3.45,        True,  True),
-        "GTX 1650":     (1.74,        False, False),
-        "GTX 1060":     (1.94,        True,  True),
-        "GTX 1660-Ti":  (3.11,        False, False),
-        "RTX 2060":     (3.7,         False, False),
-        "RTX 2070":     (4.38,        False, True),
-        "RTX 2080":     (4.98,        False, True),
+        "GT 520M":         (2.26 / 29.3, True,  False),
+        "GTX 1050":        (1.,          True,  False),
+        "Radeon Pro 560X": (26.6 / 29.3, True,  False),
+        "GTX 1050-Ti":     (1.23,        True,  True),
+        "GTX 1070":        (2.89,        True,  True),
+        "GTX 1080":        (3.45,        True,  True),
+        "GTX 1650":        (1.74,        False, False),
+        "GTX 1060":        (1.94,        True,  True),
+        "GTX 1660-Ti":     (3.11,        False, False),
+        "RTX 2060":        (3.7,         False, False),
+        "RTX 2070":        (4.38,        False, True),
+        "RTX 2080":        (4.98,        False, True),
     }.items(), key=lambda x: x[1])
 )
 
