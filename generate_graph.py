@@ -18,6 +18,8 @@ import seaborn as sns
 METRICS = OrderedDict(
     sorted({
         "GT 520M":         (2.26 / 29.3, True,  False),
+        "GeForce MX150":   (17.7 / 29.3, True,  False),
+        "Intel HD 620":    (8.35 / 29.3, True,  False),
         "GTX 1050":        (1.,          True,  False),
         "Radeon Pro 560X": (26.6 / 29.3, True,  False),
         "GTX 1050-Ti":     (1.23,        True,  True),
